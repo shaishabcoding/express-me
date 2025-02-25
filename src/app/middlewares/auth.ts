@@ -22,7 +22,7 @@ const auth =
         //verify token
         const { email } = jwtHelper.verifyToken(
           token,
-          config.jwt.jwt_secret as Secret,
+          config.jwt.refresh_token.secret as Secret,
         );
 
         const user = await User.findOne({ email });

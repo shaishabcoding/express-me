@@ -14,10 +14,10 @@ export default async function startServer() {
     await connectDB();
     await seedAdmin();
 
-    server.listen(config.port, config.ip_address, () => {
+    server.listen(config.server.port, config.server.ip_address, () => {
       logger.info(
         colors.yellow(
-          `♻️ Server running on http://${config.ip_address}:${config.port}`,
+          `♻️ Server running on http://${config.server.ip_address}:${config.server.port}`,
         ),
       );
     });

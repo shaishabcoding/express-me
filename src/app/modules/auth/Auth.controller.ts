@@ -11,7 +11,7 @@ export const AuthController = {
       await AuthServices.loginUser(body);
 
     res.cookie('refreshToken', refreshToken, {
-      secure: config.node_env !== 'development',
+      secure: config.server.node_env !== 'development',
       httpOnly: true,
     });
 

@@ -48,10 +48,7 @@ const userSchema = new Schema<TUser>(
 // Pre-save middleware to hash the password
 userSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
-    this.password = await bcrypt.hash(
-      this.password,
-      +(config.bcrypt_salt_rounds as string),
-    );
+    this.password = await bcrypt.hash(this.password, config.bcrypt_salt_rounds);
   }
   next();
 });

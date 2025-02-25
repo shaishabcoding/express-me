@@ -25,7 +25,7 @@ const createUser: RequestHandler = catchAsync(async ({ body }, res) => {
   });
 
   res.cookie('refreshToken', refreshToken, {
-    secure: config.node_env !== 'development',
+    secure: config.server.node_env !== 'development',
     httpOnly: true,
   });
 

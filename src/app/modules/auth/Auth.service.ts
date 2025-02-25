@@ -73,10 +73,7 @@ export const AuthServices = {
       throw new ApiError(StatusCodes.UNAUTHORIZED, 'Incorrect password!');
     }
 
-    newPassword = await bcrypt.hash(
-      newPassword,
-      +(config.bcrypt_salt_rounds as string),
-    );
+    newPassword = await bcrypt.hash(newPassword, config.bcrypt_salt_rounds);
 
     await User.updateOne(
       {

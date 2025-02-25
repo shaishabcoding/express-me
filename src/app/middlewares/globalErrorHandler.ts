@@ -12,11 +12,11 @@ import { StatusCodes } from 'http-status-codes';
 import ServerError from '../../errors/ServerError';
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
-  config.node_env === 'development'
+  config.server.node_env === 'development'
     ? console.log('🚨 globalErrorHandler ~~ ', error)
     : errorLogger.error('🚨 globalErrorHandler ~~ ', error);
 
-  let statusCode = 500;
+  let statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
   let message = 'Something went wrong';
   let errorMessages: IErrorMessage[] = [];
 
@@ -80,7 +80,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     success: false,
     message,
     errorMessages,
-    stack: config.node_env !== 'production' ? error?.stack : undefined,
+    stack: config.server.node_env !== 'production' ? error?.stack : undefined,
   });
 };
 

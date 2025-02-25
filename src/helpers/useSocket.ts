@@ -28,7 +28,7 @@ const useSocket = (server: http.Server) => {
       // Authenticate user
       const { email } = jwtHelper.verifyToken(
         token,
-        config.jwt.jwt_secret as string,
+        config.jwt.access_token.secret as string,
       );
 
       const user = await User.findOne({ email });

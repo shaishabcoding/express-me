@@ -10,18 +10,18 @@ export const createToken = (jwtPayload: JwtPayload, type: TTokenType) => {
 
   switch (type) {
     case 'access':
-      token = jwt.sign(jwtPayload, config.jwt.jwt_secret as string, {
-        expiresIn: config.jwt.jwt_expire_in,
+      token = jwt.sign(jwtPayload, config.jwt.access_token.secret as string, {
+        expiresIn: config.jwt.access_token.expire_in,
       });
       break;
     case 'reset':
-      token = jwt.sign(jwtPayload, config.jwt.jwt_secret as string, {
+      token = jwt.sign(jwtPayload, config.jwt.access_token.secret as string, {
         expiresIn: '10m',
       });
       break;
     case 'refresh':
-      token = jwt.sign(jwtPayload, config.jwt.jwtRefreshSecret as string, {
-        expiresIn: config.jwt.jwtRefreshExpiresIn,
+      token = jwt.sign(jwtPayload, config.jwt.refresh_token.secret as string, {
+        expiresIn: config.jwt.refresh_token.expire_in,
       });
   }
 
@@ -33,15 +33,21 @@ export const verifyToken = (token: string, type: TTokenType) => {
 
   switch (type) {
     case 'access':
-      user = jwt.verify(token, config.jwt.jwt_secret as string) as JwtPayload;
+      user = jwt.verify(
+        token,
+        config.jwt.access_token.secret as string,
+      ) as JwtPayload;
       break;
     case 'reset':
-      user = jwt.verify(token, config.jwt.jwt_secret as string) as JwtPayload;
+      user = jwt.verify(
+        token,
+        config.jwt.access_token.secret as string,
+      ) as JwtPayload;
       break;
     case 'refresh':
       user = jwt.verify(
         token,
-        config.jwt.jwtRefreshSecret as string,
+        config.jwt.refresh_token.secret as string,
       ) as JwtPayload;
   }
 
