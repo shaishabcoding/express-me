@@ -30,14 +30,17 @@ app.use('/api/v1', router);
 
 app.use(express.static('uploads'));
 
-app.get('/', (_req, res) => {
+app.get('/', (_, res) => {
   serveResponse(res, {
     message: 'Hello World',
   });
 });
 
-app.use(() => {
-  throw new ServerError(StatusCodes.NOT_FOUND, 'Route not found');
+app.use(({ originalUrl }) => {
+  throw new ServerError(
+    StatusCodes.NOT_FOUND,
+    `Route not found. ${originalUrl}`,
+  );
 });
 
 app.use(globalErrorHandler);
