@@ -6,7 +6,4 @@ declare global {
       user: TUser;
     }
   }
-  interface String {
-    toSnakeCase(): string;
-  }
 }
