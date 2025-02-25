@@ -1,36 +1,40 @@
-/* eslint-disable no-undef */
 import dotenv from 'dotenv';
 import path from 'path';
-dotenv.config({ path: path.join(process.cwd(), '.env') });
+import getEnv from '../util/env/getEnv';
+
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
 export default {
-  ip_address: process.env.IP_ADDRESS || '0.0.0.0',
-  database_url: process.env.DATABASE_URL,
-  node_env: process.env.NODE_ENV,
-  port: +(process.env.PORT || 3000),
-  bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
-  stripe_api_secret: process.env.STRIPE_SECRET_KEY,
-  google_maps: process.env.GOOGLE_MAPS,
+  ip_address: getEnv('ip address', '0.0.0.0') as string,
+  url: {
+    database: getEnv('database url') as string,
+  },
+  node_env: getEnv('node env', 'development') as string,
+  port: getEnv('port', 3000) as number,
+  allowed_origins: getEnv<string>('allowed origins', []) as string[],
+  bcrypt_salt_rounds: getEnv('bcrypt salt rounds') as string,
+  stripe_api_secret: getEnv('stripe api secret') as string,
+  google_maps: getEnv('google maps') as string,
   jwt: {
-    jwt_secret: process.env.JWT_SECRET,
-    jwt_expire_in: process.env.JWT_EXPIRE_IN,
-    jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,
-    jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
+    jwt_secret: getEnv('jwt secret') as string,
+    jwt_expire_in: getEnv('jwt expire in') as string,
+    jwtRefreshSecret: getEnv('jwt refresh secret') as string,
+    jwtRefreshExpiresIn: getEnv('jwt refresh expires in') as string,
   },
   payment: {
-    stripe_secret_key: process.env.STRIPE_SECRET_KEY,
-    stripe_webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
+    stripe_secret_key: getEnv('stripe secret key') as string,
+    stripe_webhook_secret: getEnv('stripe webhook secret') as string,
   },
   email: {
-    from: process.env.EMAIL_FROM,
-    user: process.env.EMAIL_USER,
-    port: process.env.EMAIL_PORT,
-    host: process.env.EMAIL_HOST,
-    pass: process.env.EMAIL_PASS,
+    from: getEnv('email from') as string,
+    user: getEnv('email user') as string,
+    port: getEnv('email port') as string,
+    host: getEnv('email host') as string,
+    pass: getEnv('email pass') as string,
   },
   admin: {
-    email: process.env.ADMIN_EMAIL,
-    password: process.env.ADMIN_PASSWORD,
+    email: getEnv('admin email') as string,
+    password: getEnv('admin password') as string,
   },
-  reset_pass_ui_link: 'http://localhost:5173',
+  reset_pass_ui_link: getEnv('reset pass ui link') as string,
 };
