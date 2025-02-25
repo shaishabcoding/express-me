@@ -4,10 +4,10 @@ import path from 'path';
 dotenv.config({ path: path.join(process.cwd(), '.env') });
 
 export default {
-  ip_address: process.env.IP_ADDRESS,
+  ip_address: process.env.IP_ADDRESS || '0.0.0.0',
   database_url: process.env.DATABASE_URL,
   node_env: process.env.NODE_ENV,
-  port: process.env.PORT,
+  port: +(process.env.PORT || 3000),
   bcrypt_salt_rounds: process.env.BCRYPT_SALT_ROUNDS,
   stripe_api_secret: process.env.STRIPE_SECRET_KEY,
   google_maps: process.env.GOOGLE_MAPS,
