@@ -41,4 +41,7 @@ export default {
     email: 'admin email'.getEnv(),
     password: 'admin password'.getEnv(),
   },
+  gpt: {
+    key: 'gpt key'.getEnv<string>(),
+  },
 };
