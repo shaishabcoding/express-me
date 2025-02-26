@@ -1,15 +1,22 @@
+/* eslint-disable no-unused-vars */
 import { StatusCodes } from 'http-status-codes';
-import ServerError from '../../errors/ServerError';
+import ServerError from '../../../../errors/ServerError';
 
-export default function getEnv<T>(key: string, defaultValue?: T): T {
-  const envKey = key.toSnakeCase().toUpperCase();
-  const value = process.env[envKey];
+declare global {
+  interface String {
+    getEnv<T>(defaultValue?: T): T;
+  }
+}
+
+String.prototype.getEnv = function <T>(defaultValue?: T): T {
+  const key = this.toSnakeCase().toUpperCase();
+  const value = process.env[key];
 
   if (value === undefined) {
     if (defaultValue === undefined)
       throw new ServerError(
         StatusCodes.INTERNAL_SERVER_ERROR,
-        `Environment variable ${envKey} is required`,
+        `Environment variable ${key} is required`,
       );
 
     return defaultValue;
@@ -23,7 +30,7 @@ export default function getEnv<T>(key: string, defaultValue?: T): T {
     if (isNaN(num))
       throw new ServerError(
         StatusCodes.INTERNAL_SERVER_ERROR,
-        `Environment variable ${envKey} must be a valid number`,
+        `Environment variable ${key} must be a valid number`,
       );
 
     return num as T;
@@ -33,4 +40,6 @@ export default function getEnv<T>(key: string, defaultValue?: T): T {
     return value.split(',').map(item => item.trim()) as T;
 
   return value as T;
-}
+};
+
+export {};

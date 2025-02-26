@@ -1,48 +1,44 @@
-import dotenv from 'dotenv';
-import { resolve } from 'path';
-import env from '../util/env/getEnv';
-
-dotenv.config({ path: resolve(process.cwd(), '.env') });
+import './configure';
 
 export default {
   server: {
-    ip_address: env<string>('ip address', '0.0.0.0'),
-    node_env: env<string>('node env', 'development'),
-    port: env<number>('port', 3000),
+    ip_address: 'ip address'.getEnv('0.0.0.0'),
+    node_env: 'node env'.getEnv('development'),
+    port: 'port'.getEnv(3000),
   },
   url: {
-    database: env<string>('database url'),
-    reset_pass_ui: env<string>('reset pass ui link'),
+    database: 'database url'.getEnv(),
+    reset_pass_ui: 'reset pass ui link'.getEnv(),
   },
-  allowed_origins: env<string[]>('allowed origins', []),
-  bcrypt_salt_rounds: env<number>('bcrypt salt rounds', 10),
-  google_maps: env<string>('google maps'),
+  allowed_origins: 'allowed origins'.getEnv<string[]>([]),
+  bcrypt_salt_rounds: 'bcrypt salt rounds'.getEnv(10),
+  google_maps: 'google maps'.getEnv(),
   jwt: {
     access_token: {
-      secret: env<string>('jwt secret'),
-      expire_in: env<string>('jwt expire in'),
+      secret: 'jwt secret'.getEnv(),
+      expire_in: 'jwt expire in'.getEnv(),
     },
     refresh_token: {
-      secret: env<string>('jwt refresh secret'),
-      expire_in: env<string>('jwt refresh expire in'),
+      secret: 'jwt refresh secret'.getEnv(),
+      expire_in: 'jwt refresh expire in'.getEnv(),
     },
   },
   payment: {
     stripe: {
-      key: env<string>('stripe api key'),
-      secret: env<string>('stripe api secret'),
-      webhook: env<string>('stripe webhook secret'),
+      key: 'stripe api key'.getEnv(),
+      secret: 'stripe api secret'.getEnv(),
+      webhook: 'stripe webhook secret'.getEnv(),
     },
   },
   email: {
-    from: env<string>('email from'),
-    user: env<string>('email user'),
-    port: env<number>('email port', 587),
-    host: env<string>('email host'),
-    pass: env<string>('email pass'),
+    from: 'email from'.getEnv(),
+    user: 'email user'.getEnv(),
+    port: 'email port'.getEnv(587),
+    host: 'email host'.getEnv(),
+    pass: 'email pass'.getEnv(),
   },
   admin: {
-    email: env<string>('admin email'),
-    password: env<string>('admin password'),
+    email: 'admin email'.getEnv(),
+    password: 'admin password'.getEnv(),
   },
 };
