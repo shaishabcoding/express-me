@@ -1,48 +1,48 @@
 import dotenv from 'dotenv';
 import { resolve } from 'path';
-import e from '../util/env/getEnv';
+import env from '../util/env/getEnv';
 
 dotenv.config({ path: resolve(process.cwd(), '.env') });
 
 export default {
   server: {
-    ip_address: e('ip address', '0.0.0.0') as string,
-    node_env: e('node env', 'development') as string,
-    port: e('port', 3000) as number,
+    ip_address: env<string>('ip address', '0.0.0.0'),
+    node_env: env<string>('node env', 'development'),
+    port: env<number>('port', 3000),
   },
   url: {
-    database: e('database url') as string,
-    reset_pass_ui: e('reset pass ui link') as string,
+    database: env<string>('database url'),
+    reset_pass_ui: env<string>('reset pass ui link'),
   },
-  allowed_origins: e<string>('allowed origins', []) as string[],
-  bcrypt_salt_rounds: e('bcrypt salt rounds', 10) as number,
-  google_maps: e('google maps') as string,
+  allowed_origins: env<string[]>('allowed origins', []),
+  bcrypt_salt_rounds: env<number>('bcrypt salt rounds', 10),
+  google_maps: env<string>('google maps'),
   jwt: {
     access_token: {
-      secret: e('jwt secret') as string,
-      expire_in: e('jwt expire in') as string,
+      secret: env<string>('jwt secret'),
+      expire_in: env<string>('jwt expire in'),
     },
     refresh_token: {
-      secret: e('jwt refresh secret') as string,
-      expire_in: e('jwt refresh expire in') as string,
+      secret: env<string>('jwt refresh secret'),
+      expire_in: env<string>('jwt refresh expire in'),
     },
   },
   payment: {
     stripe: {
-      key: e('stripe api key') as string,
-      secret: e('stripe api secret') as string,
-      webhook: e('stripe webhook secret') as string,
+      key: env<string>('stripe api key'),
+      secret: env<string>('stripe api secret'),
+      webhook: env<string>('stripe webhook secret'),
     },
   },
   email: {
-    from: e('email from') as string,
-    user: e('email user') as string,
-    port: e('email port') as string,
-    host: e('email host') as string,
-    pass: e('email pass') as string,
+    from: env<string>('email from'),
+    user: env<string>('email user'),
+    port: env<number>('email port', 587),
+    host: env<string>('email host'),
+    pass: env<string>('email pass'),
   },
   admin: {
-    email: e('admin email') as string,
-    password: e('admin password') as string,
+    email: env<string>('admin email'),
+    password: env<string>('admin password'),
   },
 };
